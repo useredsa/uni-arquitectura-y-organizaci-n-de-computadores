@@ -1,0 +1,1009 @@
+\documentclass[
+    12pt, % Default font size, values between 10pt-12pt are allowed
+    %spanish, % Uncomment for Spanish
+]{fphw}
+
+% Template-specific packages
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage{fontspec,unicode-math} % Required for using utf8 characters in math mode
+\usepackage{parskip}  % To add extra space between paragraphs
+% \usepackage{mathpazo} % Use the Palatino font
+\usepackage{graphicx} % Required for including images
+\usepackage{booktabs} % Better horizontal rules in tables
+\usepackage{hyperref} % For links (both internal and external)
+\usepackage{listings} % Required for insertion of code
+\usepackage{enumerate}% To modify the enumerate environment
+\usepackage{cleveref} % Better \ref command -> \cref
+\usepackage{import}   % This 4 packages and the command allow importing pdf
+\usepackage{xifthen}  % figures generated with inkscape
+\usepackage{pdfpages} % Source: https://castel.dev/post/lecture-notes-2/
+\usepackage{mathtools}% Mathematical environments
+\usepackage{relsize}  % \smaller and \mathsmaller commands
+\usepackage{physics}  % A lot of good commands for mathematics
+\usepackage[binary-units]{siunitx}  % To write magnitudes with units
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{0.95\columnwidth}
+    \small
+        \import{./images/}{#1.pdf_tex}
+}
+
+\setlength{\parindent}{15pt}
+
+%----------------------------------------------------------------------------------------
+%    ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Assignment 1 \\ Optimization of a sequential application} % Assignment title
+
+\author{Emilio Domínguez Sánchez} % Student name
+
+\date{October 18th, 2020} % Due date
+
+\institute{University of Murcia \\ Faculty of Informatics} % Institute or school name
+
+\class{Arquitectura y Organización de Computadores} % Course or class name
+
+\professor{Dr. José Manuel García Carrasco} % Professor or teacher in charge of the assignment
+
+%----------------------------------------------------------------------------------------
+%    Definitions
+%----------------------------------------------------------------------------------------
+
+\lstset{
+    basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+    frame=L,
+    captionpos=t
+}
+\newcommand{\tech}{\texttt}
+\newcommand{\gcc}{\textit{gcc}}
+\newcommand{\clang}{\textit{clang}}
+
+\DeclareMathOperator{\performance}{Performance}
+\DeclareMathOperator{\bandwidth}{Bandwidth}
+\DeclareSIUnit\flop{FLOP}
+\DeclareSIUnit[per-mode=fraction]\fps{\flop\per\s}
+\DeclareSIUnit[per-mode=fraction]\gfps{\giga\flop\per\s}
+\DeclareSIUnit[per-mode=fraction]\gBps{\giga\byte\per\s}
+\DeclareSIUnit\op{operation}
+\DeclareSIUnit\ins{instruction}
+\DeclareSIUnit\cycle{cycle}
+\DeclareSIUnit\core{core}
+\DeclareSIUnit\socket{socket}
+\DeclareSIUnit\node{node}
+\DeclareSIUnit\query{query}
+\DeclareSIUnit\channel{channel}
+\DeclareSIUnit\controller{controller}
+
+\begin{document}
+
+\maketitle % Output the assignment title, created automatically using the information in the custom commands above
+
+%----------------------------------------------------------------------------------------
+%    ASSIGNMENT CONTENT
+%----------------------------------------------------------------------------------------
+
+\section*{Instructions for the student}
+
+    You are asked to write a document where you
+explain breefly the positive aspects of the assignment,
+as well as the negatives and
+anything that you may have missed in it.
+
+\noindent
+In addition, you should choose a different hardware from that of the laboratory
+and answer the following questions.
+
+\noindent
+The length of the document shall be between one and two pages.
+
+\section*{Questions}
+
+\begin{enumerate}
+    \item Give an overview of the chosen hardware.
+We are interested in the CPU's and memory's microarchitecture.
+
+    \item What is the theoretical peak performance obtainable for
+floating point operations(in \si{\gfps})?
+
+    \item What is the theoretical peak memory bandwidth?
+
+    \item Measure the peak performance for floating point operations
+using the benchmarks \tech{helloflops1} and \tech{helloflops2}.
+Reason about the result obtained.
+
+    \item Measure the peak memory bandwidth using the benchmark \tech{copy}.
+Reason about the result obtained.
+
+    \item Find out the latency of the floating point sum
+using the set of benchmarks \tech{sumaflopsX}.
+Can you determine how many functional units are capable of performing
+floating point sums for each cpu core?
+\end{enumerate}
+
+\section*{Compilation options}
+
+You can use the following commands to compile the source files
+
+\begin{lstlisting}
+gcc -Wall -O3 -march=native helloflops1.c -o helloflops1
+gcc -Wall -O3 -march=native -fopenmp helloflops2.c -o helloflops2
+gcc -Wall -O3 -march=native -fopenmp hellomem.c -o hellomem
+for i in $(seq 1 16); do
+    gcc -Wall -O3 -march=native sumaflops$i.c -o sumaflops$i;
+done
+\end{lstlisting}
+
+\noindent
+The option \tech{-march=native} specifies that the target architecture is
+that of the underlying machine.
+\tech{-O3} activates the most aggresive optimizations, including vectorization.
+And \tech{-fopenmp} enables the handling of \textit{OpenMP} directives.
+
+
+%----------------------------------------------------------------------------------------
+
+
+\section{Hardware}
+
+    The target of the study is my home desktop computer.
+
+\subsection{CPU}
+
+    The command \tech{cat /proc/cpuinfo} shows that the cpu is an
+\textit{Intel(R) Core(TM) i7-4790K}
+that runs at a base frequency of $\SI{4.00}{\GHz}$.
+
+\noindent
+An internet search\footnotemark reveals the technical data about the processor.
+The most important information is the cpu architecture.
+The \textit{Intel(R) Core(TM) i7-4790K} is a desktop processor of the
+\textit{Haswell} family.
+
+\footnotetext{Some of the information presented here is extracted from
+\url{https://en.wikichip.org/wiki/intel/microarchitectures/haswell_(client)}
+and Intel's official datasheets.}
+
+\subsubsection{The Haswell family}
+
+    We will measure the performance for single precision floating point operations
+($\si{\flop}$).
+In this section we will document the features that can contribute to
+the peak performance.
+
+\begin{itemize}
+    \item First, how many floating points per computer operation can be performed?
+
+    Haswell cpus can perform traditional floating point operations as well as
+    \textit{fused multiply-add}(FMA) operations,
+    which allow to perform a multiplication and an addition,
+    and some other variants of FMA. %TODO citation needed
+    Both types of operations can be used for scalar inputs and for vectors.
+
+    \begin{center}
+    \begin{tabular}{c|c}
+        \textbf{Options} & \textbf{Factor} \\
+        \hline \hline
+        Standard operations & $\times 1$ \\
+        FMA(and alike) operations & $\times 2$ \\
+    \end{tabular}
+    \end{center}
+
+    \item How many operations per instruction can be performed?
+
+    Haswell cpus support vectorization through \textit{Streaming SIMD Extensions}(SSE)
+    and \textit{Advanced Vector Extensions}(AVX).
+    The former allow operations on $\SI{128}{\bit}$ vectors while the latter
+    works with vectors of $\SI{256}{\bit}$.
+    
+    \begin{center}
+    \begin{tabular}{c|c}
+        \textbf{Options} & \textbf{Factor} \\
+        \hline \hline
+        Old SSE, SSE2, SSE3 and SSE4 encoding & $\times 4$ \\ %TODO wikipedia says AVX2 means sse=256
+        AVX, AVX2 & $\times 8$ \\
+    \end{tabular}
+    \end{center}
+
+    \item How many instructions can be executed per cycle and core?
+
+    To answer this question, we need to take a look at the pipeline of the processor.
+    Haswell cpus incorporate two functional units(per core) capable of performing
+    both simple and FMA operations.
+
+    \begin{center}
+    \begin{tabular}{c|c}
+        \textbf{Options} & \textbf{Factor} \\
+        \hline \hline
+        Floating point operations & $\times 2$ \\
+    \end{tabular}
+    \end{center}
+
+    \item What is the frequency of the processor?
+
+    The base frequency of the \textit{4790-k} is $\SI{4}{\GHz}$ while
+    the turbo frequency is $\SI{4.4}{\GHz}$.
+    Intel does not specify different frequency for vector operations in their datasheets,
+    even though the base frequency of vector operations could be lower\footnotemark.
+
+    \begin{center}
+    \begin{tabular}{c|c}
+        \textbf{Options} & \textbf{Factor} \\
+        \hline \hline
+        Single processor at base frequency & $\SI{4.00}{\GHz}$ \\
+        Single processor at turbo frequency & $\SI{4.40}{\GHz}$ \\
+        Multiple processors at base frequency & $\SI{4.00}{\GHz}$
+    \end{tabular}
+    \end{center}
+
+    \footnotetext{This \href{https://community.intel.com/t5/Intel-ISA-Extensions/AVX-Base-and-Turbo-Frequencies-on-non-E5-CPUs/td-p/1024392}{thread}
+    on an Intel forum poses that question and the answers seem to indicate that
+    the frequencys are the same for all types of operations.}
+
+    \item How many cores are available?
+
+    The processor comes with $4$ cores.
+    Intel's simultaneous multi-threading(\textit{hyperthreading}) allows $2$ threads
+    to execute in each of those cores,
+    but the number of execution units remain the same,
+    meaning we shall not take that into account.
+    However, in real applications and one of the benchmarks that we are going to see,
+    when there are dependencies between the data,
+    simultaneous multi-threading can help the processor make use of execution units
+    that would otherwise remain unused due to data hazards. %TODO referencia al doc del av
+
+    \begin{center}
+    \begin{tabular}{c|c}
+        \textbf{Options} & \textbf{Factor} \\
+        \hline \hline
+        Core & $\SI{4.00}{\GHz}$ \\
+    \end{tabular}
+    \end{center}
+
+\end{itemize}
+
+\subsection{Memory}
+
+    We can read information about the installed memory in Linux through the command
+\tech{lshw -class memory}(\cref{lst:lshw-mem}),
+which we need to execute with root privileges.
+Our desktop computer is equipped with two \textit{4GiB DIMM DDR3} slots
+in separated channels.
+
+\begin{lstlisting}[caption=Excerpt of the output of \tech{lshw -class memory}, label=lst:lshw-mem]
+  *-memory
+       description: System Memory
+       physical id: 42
+       slot: System board or motherboard
+       size: 8GiB
+     *-bank:0
+          description: DIMM DDR3 Synchronous 1600 MHz (0.6 ns)
+          product: F3-12800CL9-4GBXL
+          vendor: Fujitsu
+          physical id: 0
+          serial: 00000000
+          slot: DIMM_A1
+          size: 4GiB
+          width: 64 bits
+          clock: 1600MHz (0.6ns)
+     *-bank:1
+          description: DIMM [empty]
+          product: [Empty]
+          vendor: [Empty]
+          physical id: 1
+          serial: [Empty]
+          slot: DIMM_A2
+     *-bank:2
+          description: DIMM DDR3 Synchronous 1600 MHz (0.6 ns)
+          product: F3-12800CL9-4GBXL
+          vendor: Fujitsu
+          physical id: 2
+          serial: 00000000
+          slot: DIMM_B1
+          size: 4GiB
+          width: 64 bits
+          clock: 1600MHz (0.6ns)
+     *-bank:3
+          description: DIMM [empty]
+          product: [Empty]
+          vendor: [Empty]
+          physical id: 3
+          serial: [Empty]
+          slot: DIMM_B2
+\end{lstlisting}
+
+\section{Theoretical performance}
+
+\subsection{Floating point operations performance}
+
+    The CPU peak performance can be found as
+
+\begin{equation}\label{eq:cpu-performance}
+\begin{multlined}
+    \performance_{\text{peak}} \qty(\si{\gfps}) = \\
+    \mathsmaller{
+    \qty(\si[per-mode=fraction]{\flop\per\op}) \times
+    \qty(\si[per-mode=fraction]{\op\per\ins}) \times
+    \qty(\si[per-mode=fraction]{\ins\per\cycle\per\core}) \times
+    \qty(\si[per-mode=fraction]{\giga\cycle\per\s}) \times
+    \qty(\si[per-mode=fraction]{\core\per\socket}) \times
+    \qty(\si[per-mode=fraction]{\socket}).
+    }
+\end{multlined}
+\end{equation}
+
+\noindent
+Substituting with the values that would give a higher throughput of operations
+in \cref{eq:cpu-performance} gives
+
+\begin{equation}\label{eq:cpu-performance-val}
+\begin{multlined}
+    \performance_{\text{peak}} = \\
+    \SI[per-mode=fraction]{2}{\flop\per\op} \times
+    \SI[per-mode=fraction]{8}{\op\per\ins} \times
+    \SI[per-mode=fraction]{2}{\ins\per\cycle\per\core} \times
+    \SI[per-mode=fraction]{4.00}{\giga\cycle\per\s} \times
+    \SI[per-mode=fraction]{4}{\core\per\socket} \times
+    \SI[per-mode=fraction]{1}{\socket} = \\
+    \SI{512}{\gfps}.
+\end{multlined}
+\end{equation}
+
+\subsection{Memory bandwidth}
+
+    The memory bandwidth can be found as
+
+\begin{equation}\label{eq:mem-bandwidth}
+    \bandwidth_{\text{peak}} \qty(\si{\gBps}) =
+    \mathsmaller{
+    \qty(\si[per-mode=fraction]{\byte\per\query\per\channel}) \times
+    \qty(\si[per-mode=fraction]{\giga\query\per\s}) \times
+    \qty(\si[per-mode=fraction]{\channel\per\controller}) \times
+    \qty\Big(\si[per-mode=fraction]{\controller}).
+    }
+\end{equation}
+
+\noindent
+Substituting in \cref{eq:mem-bandwidth} the desktop's parameters gives
+
+\begin{equation}\label{eq:mem-bandwidth-val}
+    \bandwidth_{\text{peak}} =
+    \mathsmaller{
+    \SI[per-mode=fraction]{8}{\kilo\byte\per\query\per\channel} \times
+    \SI[per-mode=fraction]{1.600}{\giga\query\per\s} \times
+    \SI[per-mode=fraction]{2}{\channel\per\controller} \times
+    \SI[per-mode=fraction]{1}{\controller} =
+    \SI{25.6}{\gBps}.
+    }
+\end{equation}
+
+
+\section{Actual performance}
+
+    All of the benchmarks are based on files shared by our professor.
+Nonetheless, I have modified some of them to obtain specific results.
+
+\subsection{Floating point operations benchmarks}
+
+    The first benchmark is called \tech{helloflops1.c}(\cref{lst:helloflops1})
+and is basically a big loop where we perform a multiplication and an adittion
+which can be compiled as a FMA instruction.
+The lack of data hazards allows for vectorization.
+
+\begin{lstlisting}[
+    caption=Excerpt of file \tech{helloflops1.c},
+    language=C,
+    label=lst:helloflops1,
+]
+tstart = dtime();
+// loop many times to really get lots of calculations
+for (j = 0; j < MAXFLOPS_ITERS; j++) {
+  //
+  // scale 1st array and add in the 2nd array
+  // example usage - y = mx + b;
+  //
+  for (k = 0; k < LOOP_COUNT; k++) {
+    fa[k] = a * fa[k] + fb[k];
+  }
+}
+tstop = dtime();
+\end{lstlisting}
+
+    The second benchmark is called \tech{helloflops2.c}(\cref{lst:helloflops2})
+and performs the same operations as the first benchmark,
+but spawns multiple threads that work on different portions of the arrays.
+
+\begin{lstlisting}[
+    caption=Excerpt of file \tech{helloflops2.c},
+    language=C,
+    label=lst:helloflops2,
+]
+tstart = dtime();
+// scale the calculation across threads requested
+// need to set environment variables OMP_NUM_THREADS and KMP_AFFINITY
+#pragma omp parallel for private(j, k)
+for (i = 0; i < numthreads; i++) {
+  // each thread will work it's own array section
+  // calc offset into the right section
+  int offset = i * LOOP_COUNT;
+  // loop many times to get lots of calculations
+  for (j = 0; j < MAXFLOPS_ITERS; j++) {
+    // scale 1st array and add in the 2nd array
+    for (k = 0; k < LOOP_COUNT; k++) {
+      fa[k + offset] = a * fa[k + offset] + fb[k + offset];
+    }
+  }
+}
+tstop = dtime();
+\end{lstlisting}
+
+    The execution time for both benchmarks with different compilation flags for the first
+and different number of threads for the second are the following:
+
+\begin{lstlisting}[
+    caption=Execution results for the cpu peak performance benchmarks using \gcc{}
+]
+gcc -Wall -O2 -march=native -mtune=native -ftree-vectorize …
+    -o helloflops1-gcc helloflops1.c
+gcc -Wall -O2 -march=native -mtune=native …
+    -o helloflops1-novec-gcc helloflops1.c
+gcc -Wall -O3 -march=native -mtune=native …
+    -o helloflops1-O3-gcc helloflops1.c
+gcc -Wall -O3 -march=native -mtune=native …
+-fopenmp -o helloflops2-gcc helloflops2.c
+for i in helloflops1-gcc helloflops1-novec-gcc …
+    helloflops1-O3-gcc helloflops2-gcc  ; do \
+	echo ./$i ;\
+	./$i ;\
+done ;\
+echo ./helloflops2-gcc 8 ;\
+./helloflops2-gcc 8
+./helloflops1-gcc
+Initializing
+Starting Compute
+GFlops =    128.000, Secs = 4.505,  GFlops per sec = 28.413
+./helloflops1-novec-gcc
+Initializing
+Starting Compute
+GFlops =    128.000, Secs = 29.972, GFlops per sec = 4.271
+./helloflops1-O3-gcc
+Initializing
+Starting Compute
+GFlops =    128.000, Secs = 1.265,  GFlops per sec = 101.154
+./helloflops2-gcc
+Initializing
+Starting Compute on 4 threads
+GFlops =    512.000, Secs = 2.938,  GFlops per sec = 174.240
+./helloflops2-gcc 8
+Initializing
+Starting Compute on 8 threads
+GFlops =   1024.000, Secs = 3.957,  GFlops per sec = 258.788
+\end{lstlisting}
+
+\begin{lstlisting}[
+    caption=Execution results for the cpu peak performance benchmarks using \clang{}
+]
+clang -Wall -O2 -march=native -mtune=native …
+    -o helloflops1-clang helloflops1.c
+clang -Wall -O2 -march=native -mtune=native …
+    -fno-tree-vectorize -o helloflops1-novec-clang helloflops1.c
+clang -Wall -O3 -march=native -mtune=native …
+    -o helloflops1-O3-clang helloflops1.c
+clang -Wall -O3 -march=native -mtune=native …
+    -fopenmp -o helloflops2-clang helloflops2.c
+for i in helloflops1-clang helloflops1-novec-clang …
+    helloflops1-O3-clang helloflops2-clang  ; do \
+	echo ./$i ;\
+	./$i ;\
+done ;\
+echo ./helloflops2-clang 8 ;\
+./helloflops2-clang 8
+./helloflops1-clang
+Initializing
+Starting Compute
+GFlops =    128.000, Secs = 2.002,  GFlops per sec = 63.930
+./helloflops1-novec-clang
+Initializing
+Starting Compute
+GFlops =    128.000, Secs = 23.943, GFlops per sec = 5.346
+./helloflops1-O3-clang
+Initializing
+Starting Compute
+GFlops =    128.000, Secs = 2.025,  GFlops per sec = 63.209
+./helloflops2-clang
+Initializing
+Starting Compute on 4 threads
+GFlops =    512.000, Secs = 4.741,  GFlops per sec = 107.999
+./helloflops2-clang 8
+Initializing
+Starting Compute on 8 threads
+GFlops =   1024.000, Secs = 8.525,  GFlops per sec = 120.111
+\end{lstlisting}
+
+\noindent
+The results clearly expose that to obtain a good performance we need to make use of
+vectorization and threads.
+In regards to the peak performance, we can see
+that the peak performances using a single thread was
+$\SI{101.154}{\gfps}$ using \gcc{} and
+$\SI{63.930}{\gfps}$ using \clang{}.
+The first one is close to the expected performance when we drop
+the $\times 4$ multiplier offered by the four cores in \cref{eq:cpu-performance-val},
+but we should also take into account that for a single core,
+the cpu can operate at a turbo frequency of $\SI{4.4}{\GHz}$.
+This means that the performance was lower than expected.
+The same happens when using all of the cores,
+where the greatest performance, $\SI{258.788}{\GHz}$,
+is obtained with \gcc{} and is half the peak performance of
+\cref{eq:cpu-performance-val}.
+
+    Note however that the greatest performance is obtained by
+making use of simultaneous multi-threading.
+We can guess that the assembly generated for one thread
+does not fill the pipeline completely.
+Thus, the extra threads can benefit of unused execution units.
+
+\subsection{Memory bandwidth benchmark}
+
+    We performed a single memory benchmark that copyes a very big array
+using muliple cores(\cref{lst:hellomem}).
+
+\begin{lstlisting}[
+    caption=Excerpt of file \tech{hellomem.c},
+    language=C,
+    label=lst:hellomem,
+]
+tstart = dtime();
+// use omp to scale the test across 
+// the threads requested. Need to set environment 
+// variables OMP_NUM_THREADS and KMP_AFFINITY
+for (i=0; i<BW_ITERS; i++)
+{
+//
+// copy the arrays to/from memory (2 bw ops)
+// use openmp to scale and get aggregate bw 
+//
+#pragma omp parallel for
+    for(k=0; k<BW_ARRAY_SIZE; k++)  
+    {
+       fa[k] = fb[k];
+    }
+}
+tstop = dtime();
+\end{lstlisting}
+
+\noindent
+Again, the code was compiled using \gcc{} and \clang{}.
+Both compilers performed very similarly, obtaining an $\SI{80}{\percent}$
+of the theoretical peak calculated in \cref{eq:mem-bandwidth-val}.
+
+\begin{lstlisting}[
+    caption=Execution results for the memory benchmarks for both
+    \gcc{} and \clang{}
+]
+gcc -Wall -O2 -march=native -mtune=native -ftree-vectorize -fopenmp …
+    -o hellomem-gcc hellomem.c
+clang -Wall -O2 -march=native -mtune=native -fopenmp …
+    -o hellomem-clang hellomem.c
+./hellomem-gcc 
+Initializing
+Starting BW Test on 8 threads
+Gbytes =   1024.000, Secs = 53.322, GBytes per sec = 19.204
+./hellomem-clang 
+Initializing
+Starting BW Test on 8 threads
+Gbytes =   1024.000, Secs = 53.181, GBytes per sec = 19.255
+\end{lstlisting}
+
+\subsection{Floating point sums. Latency and number of functional units}
+
+    The last benchmarks\footnotemark are a set of files that contain a loop
+with accumulating variables(\cref{lst:sumaflops5}).
+An accumulating variable represents a data hazard because the cpu needs to wait
+for the output of the previous operation to perform the next.
+Thanks to that,
+it is possible to check the latency of the functional units
+if we use a single variable.
+Once we start adding more variables we should see the performance increase
+as the cpu can starts to pipeline operations,
+until we hit the maximum number of operations the cpu can pipeline in a single core,
+which is equal to the number of execution units.
+
+\footnotetext{Originally, the codes \tech{sumaflopsX.c} given by our professor
+added $1.0$ to all the variables inside the for loop.
+As a result, \tech{gcc} was capable of recognizing that the result for all of the
+variables would be the same and perform the operations on a single variable.
+I changed the code to avoid such actions, writing different operands for each sum.}
+
+\begin{lstlisting}[
+    caption=Excerpt of file \tech{sumaflops5.c},
+    language=C,
+    label=lst:sumaflops5,
+]
+tstart = dtime();
+// loop many times to really get lots of calculations
+for (j = 0; j < MAXFLOPS_ITERS; j++) {
+  //
+  // just to sum a variable a lot of times
+  //
+  for (k = 0; k < LOOP_COUNT; k++) {
+    suma1 += 1.0f;
+    suma2 += 2.0f;
+    suma3 += 3.0f;
+    suma4 += 4.0f;
+    suma5 += 5.0f;
+  }
+}
+tstop = dtime();
+\end{lstlisting}
+
+\noindent
+The results for this tests were:
+
+\begin{lstlisting}[
+    caption=Execution results for the data hazards benchmarks using \clang{}
+]
+clang -Wall -O3 -march=native -mtune=native …
+    -o sumaflops1-clang sumaflops1.c
+clang -Wall -O3 -march=native -mtune=native …
+    -o sumaflops2-clang sumaflops2.c
+clang -Wall -O3 -march=native -mtune=native …
+    -o sumaflops3-clang sumaflops3.c
+clang -Wall -O3 -march=native -mtune=native …
+    -o sumaflops4-clang sumaflops4.c
+clang -Wall -O3 -march=native -mtune=native …
+    -o sumaflops5-clang sumaflops5.c
+clang -Wall -O3 -march=native -mtune=native …
+    -o sumaflops6-clang sumaflops6.c
+for i in sumaflops1-clang sumaflops2-clang sumaflops3-clang …
+    sumaflops4-clang sumaflops5-clang sumaflops6-clang ; do \
+	echo ./$i ;\
+	./$i ;\
+done
+./sumaflops1-clang
+Starting Compute
+GFlop =      0.640, Secs = 0.437, GFlop per sec = 1.465 (GFLOPs)
+./sumaflops2-clang
+Starting Compute
+GFlop =      1.280, Secs = 0.437, GFlop per sec = 2.929 (GFLOPs)
+./sumaflops3-clang
+Starting Compute
+GFlop =      1.920, Secs = 0.437, GFlop per sec = 4.394 (GFLOPs)
+./sumaflops4-clang
+Starting Compute
+GFlop =      2.560, Secs = 0.583, GFlop per sec = 4.395 (GFLOPs)
+./sumaflops5-clang
+Starting Compute
+GFlop =      3.200, Secs = 0.729, GFlop per sec = 4.388 (GFLOPs)
+./sumaflops6-clang
+Starting Compute
+GFlop =      3.840, Secs = 0.874, GFlop per sec = 4.393 (GFLOPs)
+\end{lstlisting}
+
+\begin{lstlisting}[
+    caption=Execution results for the data hazards benchmarks using \gcc{}
+]
+gcc -Wall -O3 -march=native -mtune=native …
+    -o sumaflops1-gcc sumaflops1.c
+gcc -Wall -O3 -march=native -mtune=native …
+    -o sumaflops2-gcc sumaflops2.c
+gcc -Wall -O3 -march=native -mtune=native …
+    -o sumaflops3-gcc sumaflops3.c
+gcc -Wall -O3 -march=native -mtune=native …
+    -o sumaflops4-gcc sumaflops4.c
+gcc -Wall -O3 -march=native -mtune=native …
+    -o sumaflops5-gcc sumaflops5.c
+gcc -Wall -O3 -march=native -mtune=native …
+    -o sumaflops6-gcc sumaflops6.c
+for i in sumaflops1-gcc sumaflops2-gcc sumaflops3-gcc …
+    sumaflops4-gcc sumaflops5-gcc sumaflops6-gcc ; do \
+	echo ./$i ;\
+	./$i ;\
+done
+./sumaflops1-gcc
+Starting Compute
+GFlop =      0.640, Secs = 0.437, GFlop per sec = 1.464 (GFLOPs)
+./sumaflops2-gcc
+Starting Compute
+GFlop =      1.280, Secs = 0.437, GFlop per sec = 2.929 (GFLOPs)
+./sumaflops3-gcc
+Starting Compute
+GFlop =      1.920, Secs = 0.437, GFlop per sec = 4.391 (GFLOPs)
+./sumaflops4-gcc
+Starting Compute
+GFlop =      2.560, Secs = 0.585, GFlop per sec = 4.378 (GFLOPs)
+./sumaflops5-gcc
+Starting Compute
+GFlop =      3.200, Secs = 0.729, GFlop per sec = 4.391 (GFLOPs)
+./sumaflops6-gcc
+Starting Compute
+GFlop =      3.840, Secs = 0.876, GFlop per sec = 4.383 (GFLOPs)
+\end{lstlisting}
+
+    Both compilers performed almost identically.
+When only one variable is present, the obtained performance is $\SI{1.465}{\gfps}$
+which is approximately one third of $\SI{4.40}{\GHz}$,
+the turbo frequency when using a single core.
+This agrees with the processor specification where it is stated that the latency
+for the \textit{floating point add unit} is $3$ cycles.
+It is also reasonable that we see a linear increase when we use $2$ or $3$ variables,
+but after that the performance stays stable.
+Hence, we conclude that the code is not using more than one execution unit.
+
+    The haswell architecture posseses two floating point operations,
+but only one is capable of performing floating point additions.
+However, the other one is capable of performing FMA operations
+(from which we could be interested only in the sum)
+at the cost of a higher latency of $5$ cycles.
+The reason why I believe the compilers are not making use of this resource
+is that the bigger latency means that if the same variables are always dedicated
+to the same functional unit,
+either the \textit{floating point add unit} or the \textit{floating point FMA unit},
+the latency for some variables is bigger.
+For instance, for the executable \tech{sumaflops4.c},
+calculating a sum via an FMA for the extra variable, the fourth,
+means that each iteration of the for loop needs at least $5$ cycles to complete,
+while not using it means that each iteration is completed in $4$ cycles.
+However, the compilers could do better, because more performance can be obtained
+if we unroll the loop $4$ iterations and
+we change which variable goes to the FMA unit every iteration.
+This motivated me to work a little bit more on this,
+learn assembly,
+and write a loop that would make use of the whole power of the processor's core.
+
+\section{Extra: Improving upon data hazards by inspection of the assembly}
+
+    We have seen that the benchmarks did not agree with the
+theoretical performance of the computer.
+We have also analyzed in the case of the data hazards that the compiler sometimes
+doesn't make full use of the processor capabilities.
+In this section I will prove how a better use of the functional units could have
+been made by the compiler in the same circunstances,
+making use of a FMA capable unit to perform additions.
+
+\noindent
+Let's start by inspecting the assembly code for the file \tech{sumaflops4.c}.
+
+\begin{lstlisting}
+.LBB1_8:                                #   Parent Loop BB1_6 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	vaddps	%xmm0, %xmm1, %xmm1
+	addl	$8, %edi
+	jne	.LBB1_8
+\end{lstlisting}
+
+\noindent
+By looking at the assembly we verify our previous hypothesis,
+that the compiler was only using \tech{vaddss} instructions.
+
+\noindent
+If we modify the source code to include FMA operations,
+
+\begin{lstlisting}[language=C]
+for (k = 0; k < LOOP_COUNT/4; k++) {
+  suma1 = fmaf(1.0f, 1.0f, suma1);
+  suma2 += 2.0f;
+  suma3 += 3.0f;
+  suma4 += 4.0f;
+  suma1 += 1.0f;
+  suma2 = fmaf(2.0f, 1.0f, suma2);
+  suma3 += 3.0f;
+  suma4 += 4.0f;
+  suma1 += 1.0f;
+  suma2 += 2.0f;
+  suma3 = fmaf(3.0f, 1.0f, suma3);
+  suma4 += 4.0f;
+  suma1 += 1.0f;
+  suma2 += 2.0f;
+  suma3 += 3.0f;
+  suma4 = fmaf(4.0f, 1.0f, suma4);
+}
+\end{lstlisting}
+
+\noindent
+we would see no difference with the up-to-date versions of
+\gcc{} and \clang{}.
+Both compilers optimize the multiplication in the FMA and
+write assembly as if it did not exist.
+With the intent of avoiding writing assembly,
+I decided to modify the result computed by the program,
+knowing that we could always write the same assembly with different constants.
+
+\begin{lstlisting}[language=C]
+for (k = 0; k < LOOP_COUNT/4; k++) {
+  suma1 = fmaf(1.0f, 1.1f, suma1);
+  suma2 += 2.0f;
+  suma3 += 3.0f;
+  suma4 += 4.0f;
+  suma1 += 1.0f;
+  suma2 = fmaf(2.0f, 1.1f, suma2);
+  suma3 += 3.0f;
+  suma4 += 4.0f;
+  suma1 += 1.0f;
+  suma2 += 2.0f;
+  suma3 = fmaf(3.0f, 1.1f, suma3);
+  suma4 += 4.0f;
+  suma1 += 1.0f;
+  suma2 += 2.0f;
+  suma3 += 3.0f;
+  suma4 = fmaf(4.0f, 1.1f, suma4);
+}
+\end{lstlisting}
+
+    The assembly code produced for this last code does use \tech{vfmaddss} operations.
+The measured performance for this code was $\SI{5.859}{\gfps}$,
+$\frac{4}{3}$ times faster than the original code and the file \tech{sumaflops3}.
+What this means is that we managed to pipeline using the second floating point unit,
+obtaining more than $\SI[per-mode=fraction]{1}{\flop\per\cycle}$.
+
+\begin{lstlisting}
+.LBB1_9:                                #   Parent Loop BB1_7 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	vaddss	%xmm1, %xmm5, %xmm5
+	vaddss	%xmm3, %xmm6, %xmm6
+	vaddss	%xmm2, %xmm7, %xmm7
+	vaddss	%xmm0, %xmm9, %xmm4
+	vaddss	%xmm5, %xmm8, %xmm5
+	vfmadd231ss	%xmm1, %xmm3, %xmm6 # xmm6 = (xmm3 * xmm1) + xmm6
+	vaddss	%xmm2, %xmm7, %xmm7
+	vaddss	%xmm4, %xmm9, %xmm4
+	vaddss	%xmm5, %xmm8, %xmm5
+	vaddss	%xmm3, %xmm6, %xmm6
+	vfmadd231ss	%xmm1, %xmm2, %xmm7 # xmm7 = (xmm2 * xmm1) + xmm7
+	vaddss	%xmm4, %xmm9, %xmm4
+	vaddss	%xmm5, %xmm8, %xmm5
+	vaddss	%xmm3, %xmm6, %xmm6
+	vaddss	%xmm2, %xmm7, %xmm7
+	vfmadd231ss	%xmm1, %xmm9, %xmm4 # xmm4 = (xmm9 * xmm1) + xmm4
+	vaddss	%xmm1, %xmm5, %xmm5
+	vaddss	%xmm3, %xmm6, %xmm6
+	vaddss	%xmm2, %xmm7, %xmm7
+	vaddss	%xmm4, %xmm9, %xmm4
+	vaddss	%xmm5, %xmm8, %xmm5
+	vfmadd231ss	%xmm1, %xmm3, %xmm6 # xmm6 = (xmm3 * xmm1) + xmm6
+	vaddss	%xmm2, %xmm7, %xmm7
+	vaddss	%xmm4, %xmm9, %xmm4
+	vaddss	%xmm5, %xmm8, %xmm5
+	vaddss	%xmm3, %xmm6, %xmm6
+	vfmadd231ss	%xmm1, %xmm2, %xmm7 # xmm7 = (xmm2 * xmm1) + xmm7
+	vaddss	%xmm4, %xmm9, %xmm0
+	vaddss	%xmm5, %xmm8, %xmm5
+	vaddss	%xmm3, %xmm6, %xmm6
+	vaddss	%xmm2, %xmm7, %xmm7
+	vfmadd231ss	%xmm1, %xmm9, %xmm0 # xmm0 = (xmm9 * xmm1) + xmm0
+	addl	$2, %edi
+	jne	.LBB1_9
+\end{lstlisting}
+
+    The next challenge would be:
+can we obtain $\SI[per-mode=fraction]{2}{\flop\per\cycle}$,
+which we know is the maximum for our processor?
+The answer is yes, but we cannot do it for the program with $4$ variables.
+
+\subsection{Obtaining peak performance without vectorization}
+
+    We want to launch an \tech{add} and a \tech{fma} operation each cycle.
+The \tech{add} operation has a latency of $3$ cycles,
+while the \tech{fma} operation has a latency of $5$ cycles.
+Therefore, the first $3$ cycles we have compute on $6$ different variables.
+
+\begin{center}
+    \begin{tabular}{l||c c}
+        cycle & ADD acts on & FMA acts on \\
+        \hline \hline \\
+        0 & reg0 & reg3 \\
+        1 & reg1 & reg4 \\
+        2 & reg2 & reg5 \\
+    \end{tabular}
+\end{center}
+
+\noindent
+On cycle $3$, the result of the first addition is available
+and we can operate with that value again,
+but the result from the FMA operation is not available yet.
+The same is true for the cycle $4$, when we would be able to use the register $1$,
+but none of the registers $3$ to $5$.
+If only we had to operate over $3$ more variables,
+we could be able to launch $3$ more operations in the next $3$ cycles.
+
+    The idea to obtain the peak performance is
+to swap the variables that used the \textit{ADD unit} and are ready
+with those that used the \textit{FMA unit} and are in the process of computation and
+launch new FMA operations over the variables which were not used
+in the previous $3$ cycles.
+Note that we would perform $2$ operations on the same variable over $9$ cycles.
+It would be necessary to unroll the loop to write two iterations.
+The whole idea can remind us of the \textit{three-field system}\footnote{
+\url{https://en.wikipedia.org/wiki/Three-field_system}
+}.
+
+\begin{table}[h]
+    \centering
+    \caption{Distribution of operations for the highest performance}
+    \begin{tabular}{l||c c}
+        cycle & ADD acts on & FMA acts on \\
+        \hline \hline \\
+        0 & reg0 & reg3 \\
+        1 & reg1 & reg4 \\
+        2 & reg2 & reg5 \\
+        \\
+        3 & reg6 & reg0 \\
+        4 & reg7 & reg1 \\
+        5 & reg8 & reg2 \\
+        \\
+        6 & reg3 & reg6 \\
+        7 & reg4 & reg7 \\
+        8 & reg5 & reg8 \\
+    \end{tabular}
+\end{table}
+
+\begin{lstlisting}[
+    caption=Excerpt of file \tech{sumaflops-improved9.c},
+    language=C,
+    label=lst:sumaflops-improved9,
+]
+for (k = 0; k < LOOP_COUNT/2; k++) {
+  suma1 += 1.0f;
+  suma2 += 2.0f;
+  suma3 += 3.0f;
+  suma4 = fmaf(suma4, 1.01f, 4.0f);
+  suma5 = fmaf(suma5, 1.01f, 5.0f);
+  suma6 = fmaf(suma6, 1.01f, 6.0f);
+
+  suma7 += 7.0f;
+  suma8 += 8.0f;
+  suma9 += 9.0f;
+  suma1 = fmaf(suma1, 1.01f, 1.0f);
+  suma2 = fmaf(suma2, 1.01f, 2.0f);
+  suma3 = fmaf(suma3, 1.01f, 3.0f);
+
+  suma4 += 4.0f;
+  suma5 += 5.0f;
+  suma6 += 6.0f;
+  suma7 = fmaf(suma7, 1.01f, 7.0f);
+  suma8 = fmaf(suma8, 1.01f, 8.0f);
+  suma9 = fmaf(suma9, 1.01f, 9.0f);
+}
+\end{lstlisting}
+
+    This idea is implemented in the file
+\tech{sumaflops-improved9.c}(\cref{lst:sumaflops-improved9}).
+\gcc{} performed $\SI{7.835}{\gfps}$ and \clang{} did $\SI{8.182}{\gfps}$.
+We obtained marks that are very close to twice the turbo frequency of the cpu
+($\SI{4.4}{\GHz}$).
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

@@ -1,0 +1,35 @@
+clang -Wall -O2 -march=native -mtune=native -o helloflops1-clang helloflops1.c
+clang -Wall -O2 -march=native -mtune=native -fno-tree-vectorize -o helloflops1-novec-clang helloflops1.c
+clang -Wall -O3 -march=native -mtune=native -o helloflops1-O3-clang helloflops1.c
+clang -Wall -O3 -march=native -mtune=native -fopenmp -o helloflops2-clang helloflops2.c
+clang -Wall -O2 -march=native -mtune=native -fopenmp -o hellomem-clang hellomem.c
+for i in helloflops1-clang helloflops1-novec-clang helloflops1-O3-clang helloflops2-clang  ; do \
+	echo ./$i ;\
+	./$i ;\
+done ;\
+echo ./helloflops2-clang 8 ;\
+./helloflops2-clang 8
+./helloflops1-clang
+Initializing
+Starting Compute
+GFlops =    128.000, Secs =      2.002, GFlops per sec =     63.930
+./helloflops1-novec-clang
+Initializing
+Starting Compute
+GFlops =    128.000, Secs =     23.943, GFlops per sec =      5.346
+./helloflops1-O3-clang
+Initializing
+Starting Compute
+GFlops =    128.000, Secs =      2.025, GFlops per sec =     63.209
+./helloflops2-clang
+Initializing
+Starting Compute on 4 threads
+GFlops =    512.000, Secs =      4.741, GFlops per sec =    107.999
+./hellomem-clang 
+Initializing
+Starting BW Test on 8 threads
+Gbytes =   1024.000, Secs =     53.181, GBytes per sec =     19.255
+./helloflops2-clang 8
+Initializing
+Starting Compute on 8 threads
+GFlops =   1024.000, Secs =      8.525, GFlops per sec =    120.111

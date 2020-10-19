@@ -1,0 +1,76 @@
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops10-gcc sumaflops10.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops11-gcc sumaflops11.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops12-gcc sumaflops12.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops13-gcc sumaflops13.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops14-gcc sumaflops14.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops15-gcc sumaflops15.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops16-gcc sumaflops16.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops1-gcc sumaflops1.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops2-gcc sumaflops2.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops3-gcc sumaflops3.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops4-gcc sumaflops4.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops5-gcc sumaflops5.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops6-gcc sumaflops6.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops7-gcc sumaflops7.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops8-gcc sumaflops8.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops9-gcc sumaflops9.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops-improved4-gcc sumaflops-improved4.c
+gcc -Wall -O3 -march=native -mtune=native -o sumaflops-improved9-gcc sumaflops-improved9.c
+for i in sumaflops10-gcc sumaflops11-gcc sumaflops12-gcc sumaflops13-gcc sumaflops14-gcc sumaflops15-gcc sumaflops16-gcc sumaflops1-gcc sumaflops2-gcc sumaflops3-gcc sumaflops4-gcc sumaflops5-gcc sumaflops6-gcc sumaflops7-gcc sumaflops8-gcc sumaflops9-gcc sumaflops-improved4-gcc sumaflops-improved9-gcc ; do \
+	echo ./$i ;\
+	./$i ;\
+done
+./sumaflops10-gcc
+Starting Compute
+GFlop =      6.400, Secs =      1.519, GFlop per sec =      4.214 (GFLOPs), suma1 = 721420288.000, suma2 = 536870912.000 
+./sumaflops11-gcc
+Starting Compute
+GFlop =      7.040, Secs =      1.623, GFlop per sec =      4.338 (GFLOPs), suma1 = 721420288.000, suma2 = 805306368.000 
+./sumaflops12-gcc
+Starting Compute
+GFlop =      7.680, Secs =      1.771, GFlop per sec =      4.338 (GFLOPs), suma1 = 721420288.000, suma2 = 1073741824.000 
+./sumaflops13-gcc
+Starting Compute
+GFlop =      8.320, Secs =      1.918, GFlop per sec =      4.338 (GFLOPs), suma1 = 721420288.000, suma2 = 1342177280.000 
+./sumaflops14-gcc
+Starting Compute
+GFlop =      8.960, Secs =      2.061, GFlop per sec =      4.347 (GFLOPs), suma1 = 721420288.000, suma2 = 1610612736.000 
+./sumaflops15-gcc
+Starting Compute
+GFlop =      9.600, Secs =      2.209, GFlop per sec =      4.345 (GFLOPs), suma1 = 721420288.000, suma2 = 1879048192.000 
+./sumaflops16-gcc
+Starting Compute
+GFlop =     10.240, Secs =      2.356, GFlop per sec =      4.347 (GFLOPs), suma1 = 721420288.000, suma2 = 2147483648.000 
+./sumaflops1-gcc
+Starting Compute
+GFlop =      0.640, Secs =      0.437, GFlop per sec =      1.464 (GFLOPs), suma1 = 16777216.000
+./sumaflops2-gcc
+Starting Compute
+GFlop =      1.280, Secs =      0.437, GFlop per sec =      2.929 (GFLOPs), suma1 = 50331648.000
+./sumaflops3-gcc
+Starting Compute
+GFlop =      1.920, Secs =      0.437, GFlop per sec =      4.391 (GFLOPs), suma1 = 117440512.000
+./sumaflops4-gcc
+Starting Compute
+GFlop =      2.560, Secs =      0.585, GFlop per sec =      4.378 (GFLOPs), suma1 = 184549376.000
+./sumaflops5-gcc
+Starting Compute
+GFlop =      3.200, Secs =      0.729, GFlop per sec =      4.391 (GFLOPs), suma1 = 318767104.000
+./sumaflops6-gcc
+Starting Compute
+GFlop =      3.840, Secs =      0.876, GFlop per sec =      4.383 (GFLOPs), suma1 = 452984832.000
+./sumaflops7-gcc
+Starting Compute
+GFlop =      4.480, Secs =      1.022, GFlop per sec =      4.384 (GFLOPs), suma1 = 587202560.000
+./sumaflops8-gcc
+Starting Compute
+GFlop =      5.120, Secs =      1.165, GFlop per sec =      4.394 (GFLOPs), suma1 = 721420288.000
+./sumaflops9-gcc
+Starting Compute
+GFlop =      5.760, Secs =      1.312, GFlop per sec =      4.392 (GFLOPs), suma1 = 721420288.000, suma2 = 268435456.000 
+./sumaflops-improved4-gcc
+Starting Compute
+GFlop =      2.560, Secs =      0.510, GFlop per sec =      5.023 (GFLOPs), suma1 = 184549376.000
+./sumaflops-improved9-gcc
+Starting Compute
+GFlop =      5.760, Secs =      0.735, GFlop per sec =      7.835 (GFLOPs), suma1 =        inf, suma2 =        inf 

@@ -1,0 +1,76 @@
+clang -Wall -O3 -march=native -mtune=native -o sumaflops10-clang sumaflops10.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops11-clang sumaflops11.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops12-clang sumaflops12.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops13-clang sumaflops13.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops14-clang sumaflops14.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops15-clang sumaflops15.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops16-clang sumaflops16.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops1-clang sumaflops1.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops2-clang sumaflops2.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops3-clang sumaflops3.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops4-clang sumaflops4.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops5-clang sumaflops5.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops6-clang sumaflops6.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops7-clang sumaflops7.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops8-clang sumaflops8.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops9-clang sumaflops9.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops-improved4-clang sumaflops-improved4.c
+clang -Wall -O3 -march=native -mtune=native -o sumaflops-improved9-clang sumaflops-improved9.c
+for i in sumaflops10-clang sumaflops11-clang sumaflops12-clang sumaflops13-clang sumaflops14-clang sumaflops15-clang sumaflops16-clang sumaflops1-clang sumaflops2-clang sumaflops3-clang sumaflops4-clang sumaflops5-clang sumaflops6-clang sumaflops7-clang sumaflops8-clang sumaflops9-clang sumaflops-improved4-clang sumaflops-improved9-clang ; do \
+	echo ./$i ;\
+	./$i ;\
+done
+./sumaflops10-clang
+Starting Compute
+GFlop =      6.400, Secs =      1.514, GFlop per sec =      4.226 (GFLOPs), suma1 = 721420288.000, suma2 = 536870912.000 
+./sumaflops11-clang
+Starting Compute
+GFlop =      7.040, Secs =      1.623, GFlop per sec =      4.338 (GFLOPs), suma1 = 721420288.000, suma2 = 805306368.000 
+./sumaflops12-clang
+Starting Compute
+GFlop =      7.680, Secs =      1.768, GFlop per sec =      4.344 (GFLOPs), suma1 = 721420288.000, suma2 = 1073741824.000 
+./sumaflops13-clang
+Starting Compute
+GFlop =      8.320, Secs =      1.916, GFlop per sec =      4.343 (GFLOPs), suma1 = 721420288.000, suma2 = 1342177280.000 
+./sumaflops14-clang
+Starting Compute
+GFlop =      8.960, Secs =      2.061, GFlop per sec =      4.348 (GFLOPs), suma1 = 721420288.000, suma2 = 1610612736.000 
+./sumaflops15-clang
+Starting Compute
+GFlop =      9.600, Secs =      2.205, GFlop per sec =      4.354 (GFLOPs), suma1 = 721420288.000, suma2 = 1879048192.000 
+./sumaflops16-clang
+Starting Compute
+GFlop =     10.240, Secs =      2.331, GFlop per sec =      4.394 (GFLOPs), suma1 = 721420288.000, suma2 = 2147483648.000 
+./sumaflops1-clang
+Starting Compute
+GFlop =      0.640, Secs =      0.437, GFlop per sec =      1.465 (GFLOPs), suma1 = 16777216.000
+./sumaflops2-clang
+Starting Compute
+GFlop =      1.280, Secs =      0.437, GFlop per sec =      2.929 (GFLOPs), suma1 = 50331648.000
+./sumaflops3-clang
+Starting Compute
+GFlop =      1.920, Secs =      0.437, GFlop per sec =      4.394 (GFLOPs), suma1 = 117440512.000
+./sumaflops4-clang
+Starting Compute
+GFlop =      2.560, Secs =      0.583, GFlop per sec =      4.395 (GFLOPs), suma1 = 184549376.000
+./sumaflops5-clang
+Starting Compute
+GFlop =      3.200, Secs =      0.729, GFlop per sec =      4.388 (GFLOPs), suma1 = 318767104.000
+./sumaflops6-clang
+Starting Compute
+GFlop =      3.840, Secs =      0.874, GFlop per sec =      4.393 (GFLOPs), suma1 = 452984832.000
+./sumaflops7-clang
+Starting Compute
+GFlop =      4.480, Secs =      1.020, GFlop per sec =      4.394 (GFLOPs), suma1 = 587202560.000
+./sumaflops8-clang
+Starting Compute
+GFlop =      5.120, Secs =      1.165, GFlop per sec =      4.394 (GFLOPs), suma1 = 721420288.000
+./sumaflops9-clang
+Starting Compute
+GFlop =      5.760, Secs =      1.311, GFlop per sec =      4.394 (GFLOPs), suma1 = 721420288.000, suma2 = 268435456.000 
+./sumaflops-improved4-clang
+Starting Compute
+GFlop =      2.560, Secs =      0.437, GFlop per sec =      5.859 (GFLOPs), suma1 = 184549376.000
+./sumaflops-improved9-clang
+Starting Compute
+GFlop =      5.760, Secs =      0.704, GFlop per sec =      8.182 (GFLOPs), suma1 =        inf, suma2 =        inf 
