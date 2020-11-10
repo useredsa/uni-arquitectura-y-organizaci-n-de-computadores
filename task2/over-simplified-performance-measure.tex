@@ -1,0 +1,271 @@
+\documentclass[
+    12pt, % Default font size, values between 10pt-12pt are allowed
+    %spanish, % Uncomment for Spanish
+]{fphw}
+
+% Template-specific packages
+\usepackage[utf8]{inputenc} % Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage{fontspec,unicode-math} % Required for using utf8 characters in math mode
+\usepackage{parskip}  % To add extra space between paragraphs
+% \usepackage{mathpazo} % Use the Palatino font
+\usepackage{graphicx} % Required for including images
+\usepackage{booktabs} % Better horizontal rules in tables
+\usepackage{hyperref} % For links (both internal and external)
+\usepackage{listings} % Required for insertion of code
+\usepackage{enumerate}% To modify the enumerate environment
+\usepackage{cleveref} % Better \ref command -> \cref
+\usepackage{import}   % This 4 packages and the command allow importing pdf
+\usepackage{xifthen}  % figures generated with inkscape
+\usepackage{pdfpages} % Source: https://castel.dev/post/lecture-notes-2/
+\usepackage{mathtools}% Mathematical environments
+\usepackage{relsize}  % \smaller and \mathsmaller commands
+\usepackage{physics}  % A lot of good commands for mathematics
+\usepackage[binary-units]{siunitx}  % To write magnitudes with units
+\usepackage{multirow}
+% \usepackage{multicolumn}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{0.95\columnwidth}
+    \small
+        \import{./images/}{#1.pdf_tex}
+}
+
+\setlength{\parindent}{15pt}
+
+%----------------------------------------------------------------------------------------
+%    ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Assignment 1 \\ Optimization of a sequential application} % Assignment title
+
+\author{Emilio Domínguez Sánchez} % Student name
+
+\date{October 18th, 2020} % Due date
+
+\institute{University of Murcia \\ Faculty of Informatics} % Institute or school name
+
+\class{Arquitectura y Organización de Computadores} % Course or class name
+
+\professor{Dr. José Manuel García Carrasco} % Professor or teacher in charge of the assignment
+
+%----------------------------------------------------------------------------------------
+%    Definitions
+%----------------------------------------------------------------------------------------
+
+\lstset{
+    basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+    frame=L,
+    captionpos=t
+}
+\newcommand{\tech}{\texttt}
+\newcommand{\gcc}{\textit{gcc}}
+\newcommand{\clang}{\textit{clang}}
+
+\DeclareMathOperator{\performance}{Performance}
+\DeclareMathOperator{\bandwidth}{Bandwidth}
+\DeclareSIUnit\flop{FLOP}
+\DeclareSIUnit[per-mode=fraction]\fps{\flop\per\s}
+\DeclareSIUnit[per-mode=fraction]\gfps{\giga\flop\per\s}
+\DeclareSIUnit[per-mode=fraction]\gBps{\giga\byte\per\s}
+\DeclareSIUnit\op{operation}
+\DeclareSIUnit\ins{instruction}
+\DeclareSIUnit\cycle{cycle}
+\DeclareSIUnit\core{core}
+\DeclareSIUnit\socket{socket}
+\DeclareSIUnit\node{node}
+\DeclareSIUnit\query{query}
+\DeclareSIUnit\channel{channel}
+\DeclareSIUnit\controller{controller}
+
+\begin{document}
+
+\maketitle % Output the assignment title, created automatically using the information in the custom commands above
+
+%----------------------------------------------------------------------------------------
+%    ASSIGNMENT CONTENT
+%----------------------------------------------------------------------------------------
+
+\section*{Problem}
+
+\begin{problem}
+
+    Suppose you had a data center that was equiped with
+a \textit{Haswell E5-2699 v3} general purpose processor,
+an \textit{NVIDIA K80} GPU and
+an TPU from \textit{Google} specifically designed for machine learning loads.
+The power performance is described in \cref{tab:power}.
+The performance characteristics vary depending on the type of load.
+In \cref{tab:performance} you can see the details
+for three different workloads $A$, $B$ and $C$.
+Where $A$ and $B$ represent workloads typical of the programs that train neural networks
+and $C$ represents a traditional workload.
+
+\begin{enumerate}
+    \item If the data center spends $70\%$ of its time on the workload $A$
+and the rest of its time in the workload B,
+what is the \textit{speedup} of using the TPUs over the GPUs? %TODO
+
+    \item Assume that the power consumption for each processor is lineal between
+its idle value and its max load value.
+Specifically, we have measured that for the loads of the previous question
+the general purpose processor is working at $59.4\%$ of its capacity,
+the GPUs are doing it at $55.9\%$ and
+the TPUs at $88.6\%$.
+What is the power consumption for each of the three platforms?
+
+    \item After some time, the data center has the following distribution of load.
+$40\%$ of the load is of type $A$,
+$10\%$ is of type $B$ and
+$50\%$ of type $C$.
+What is the \textit{speedup} of using GPUs or TPUs compared to using the platform
+with general purpose processors.
+\end{enumerate}
+
+\end{problem}
+
+\begin{table}[h]
+    \footnotesize
+    \centering
+    \begin{tabular}{c c c c c}
+        \multirow{2}{*}{System} & \multirow{2}{*}{Chip} & \multirow{2}{*}{TDP}
+            & Power Consumption & Power Consumption \\
+        & & & (stand-by) & (max. load) \\
+        \hline \hline \\
+
+        General purpose & \textit{Haswell E5-2699 v3} &
+            $\SI{504}{\watt}$ & $\SI{159}{\watt}$ & $\SI{455}{\watt}$ \\
+        GP-GPU & \textit{NVIDIA K80} &
+            $\SI{1838}{\watt}$ & $\SI{357}{\watt}$ & $\SI{991}{\watt}$ \\
+        ASIC & \textit{TPU(v1)} &
+            $\SI{861}{\watt}$ & $\SI{290}{\watt}$ & $\SI{384}{\watt}$ \\
+    \end{tabular}
+    \caption{Power comsumption}
+    \label{tab:power}
+\end{table}
+
+\begin{table}[h]
+    \footnotesize
+    \centering
+    \begin{tabular}{c c c c c}
+        & & \multicolumn{3}{c}{Productivity (Throughput)} \\
+        System & Chip & A & B & C \\
+        \hline \hline \\
+
+        General purpose & \textit{Haswell E5-2699 v3} &
+            $5482$ & $13194$ & $12000$ \\
+        GP-GPU & \textit{NVIDIA K80} &
+            $13461$ & $36465$ & $15000$ \\
+        ASIC & \textit{TPU(v1)} &
+            $225000$ & $280000$ & $2000$ \\
+    \end{tabular}
+    \caption{Performance parameters}
+    \label{tab:performance}
+\end{table}
+
+%----------------------------------------------------------------------------------------
+
+\newpage
+
+\section*{Answer}
+
+\begin{enumerate}
+    \item The statement talks about the time spent in each workload,
+    instead of the percentage of the workload that corresponds to a specific type.
+    But then it asks about the speedup instead of the throughput increase.
+    I will find the answer for the throughput thinking that the time spent is fixed
+    and the speedup thinking that the percentages refer to the workload and not the time.
+
+    \begin{enumerate}
+        \item Percentages with respect to time.
+
+        We will compute the throughput for each case:
+
+        \begin{align*}
+            \operatorname{Throughput}_{\text{GPU}} &=
+            0.7 \times 13461 + 0.3 \times 36465 =
+            20362.2, \\
+            \operatorname{Throughput}_{\text{TPU}} &=
+            0.7 \times 225000 + 0.3 \times 280000 =
+            241500.
+        \end{align*}
+
+        \noindent
+        The speedup of using the TPUs would be
+
+        \begin{align*}
+            \operatorname{speedup} =
+            \frac{241500}{20362.2} \approx
+            11.86.
+        \end{align*}
+
+        \item Percentages with respect to workload.
+
+        The speedups for the tasks would be $\frac{225000}{13461} \approx 16.71$
+        and $\frac{280000}{36465} \approx 7.68$.
+        Giving a task speedup of (using \textit{Amdahl's argument})
+
+        \begin{equation*}
+            \operatorname{speedup} \approx
+            \frac{1}{\frac{0.7}{16.71} + \frac{0.3}{7.68}} \approx
+            12.35.
+        \end{equation*}
+        
+    \end{enumerate}
+
+    \item The expression for the power consumption has to be
+
+    \begin{equation*}
+        \operatorname{Power}(\text{load ratio}) =
+        \operatorname{Power}_{\text{idle}} + \text{load ratio} \times
+            \qty(\operatorname{Power}_{\text{max.}}-\operatorname{Power}_{\text{idle}}). \\
+    \end{equation*}
+
+    \noindent
+    Hence, the power consumption for each platform can be calulated as
+
+    \begin{align*}
+        \operatorname{Power}_{\text{CPU}}(0.594) =
+        159 + 0.594 \times (455 - 159) \approx
+        334.82, \\
+        \operatorname{Power}_{\text{CPU}}(0.559) =
+        357 + 0.559 \times (991 - 357) \approx
+        711.41, \\
+        \operatorname{Power}_{\text{TPU}}(0.886) =
+        290 + 0.886 \times (384 - 290) \approx
+        373.28.
+    \end{align*}
+
+    \item The speedup with respect to using CPUs for each workload would be
+
+    \begin{center}
+        \begin{tabular}{cccc}
+            System & A & B & C \\
+            \hline \hline \\
+            GP-GPU &
+            $\frac{13461}{5482} \approx 2.46$ &
+            $\frac{36465}{13194} \approx 2.76$ &
+            $\frac{15000}{12000} = 1.25$ \\
+            \\
+            ASIC & $\frac{225000}{5482} \approx 41.0$ &
+            $\frac{280000}{13194} \approx 21.2$ &
+            $\frac{2000}{12000} \approx 0.1.7$
+        \end{tabular}
+    \end{center}
+
+    Hence, the total speedup would be (using \textit{Amdahl's argument})
+
+    \begin{align*}
+        \operatorname{speedup}_{\text{GPU}} &\approx
+        \frac{1}{\frac{0.3}{2.46} + \frac{0.1}{2.76} + \frac{0.5}{1.25}} \approx
+        1.67, \\
+        \operatorname{speedup}_{\text{GPU}} &\approx
+        \frac{1}{\frac{0.3}{41.0} + \frac{0.1}{21.2} + \frac{0.5}{1.67}} \approx
+        0.34.
+    \end{align*}
+
+\end{enumerate}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}
