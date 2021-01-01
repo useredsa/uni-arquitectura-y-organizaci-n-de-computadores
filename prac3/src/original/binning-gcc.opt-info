@@ -1,0 +1,447 @@
+/usr/include/c++/10.2.0/bits/random.h:1791:26: note: Considering inline candidate std::uniform_real_distribution<_RealType>::param_type::param_type(_RealType, _RealType) [with _RealType = double]/1601.
+/usr/include/c++/10.2.0/bits/random.h:1791:26: optimized:  Inlining std::uniform_real_distribution<_RealType>::param_type::param_type(_RealType, _RealType) [with _RealType = double]/1601 into std::uniform_real_distribution<_RealType>::uniform_real_distribution(_RealType, _RealType) [with _RealType = double]/1564.
+/usr/include/c++/10.2.0/bits/random.h:149:48: note: Considering inline candidate static _Tp std::__detail::_Mod<_Tp, __m, __a, __c, true, __s>::__calc(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 1; _Tp __c = 0; bool __s = true]/1659.
+/usr/include/c++/10.2.0/bits/random.h:149:48: optimized:  Inlining static _Tp std::__detail::_Mod<_Tp, __m, __a, __c, true, __s>::__calc(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 1; _Tp __c = 0; bool __s = true]/1659 into _Tp std::__detail::__mod(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 1; _Tp __c = 0]/1645.
+/usr/include/c++/10.2.0/bits/random.tcc:123:40: note: Considering inline candidate _Tp std::__detail::__mod(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 1; _Tp __c = 0]/1645.
+/usr/include/c++/10.2.0/bits/random.tcc:123:40: optimized:  Inlining _Tp std::__detail::__mod(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 1; _Tp __c = 0]/1645 into void std::linear_congruential_engine<_UIntType, __a, __c, __m>::seed(std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type) [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1626.
+/usr/include/c++/10.2.0/bits/random.tcc:120:39: note: Considering inline candidate _Tp std::__detail::__mod(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 1; _Tp __c = 0]/1645.
+/usr/include/c++/10.2.0/bits/random.tcc:120:39: optimized:  Inlining _Tp std::__detail::__mod(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 1; _Tp __c = 0]/1645 into void std::linear_congruential_engine<_UIntType, __a, __c, __m>::seed(std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type) [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1626.
+/usr/include/c++/10.2.0/bits/random.tcc:119:43: note: Considering inline candidate _Tp std::__detail::__mod(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 1; _Tp __c = 0]/1645.
+/usr/include/c++/10.2.0/bits/random.tcc:119:43: optimized:  Inlining _Tp std::__detail::__mod(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 1; _Tp __c = 0]/1645 into void std::linear_congruential_engine<_UIntType, __a, __c, __m>::seed(std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type) [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1626.
+/usr/include/c++/10.2.0/bits/random.h:285:13: note: Considering inline candidate void std::linear_congruential_engine<_UIntType, __a, __c, __m>::seed(std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type) [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1626.
+/usr/include/c++/10.2.0/bits/random.h:285:13: optimized:  Inlining void std::linear_congruential_engine<_UIntType, __a, __c, __m>::seed(std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type) [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1626 into std::linear_congruential_engine<_UIntType, __a, __c, __m>::linear_congruential_engine(std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type) [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1604.
+/usr/include/c++/10.2.0/bits/random.h:273:77: note: Considering inline candidate std::linear_congruential_engine<_UIntType, __a, __c, __m>::linear_congruential_engine(std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type) [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1604.
+/usr/include/c++/10.2.0/bits/random.h:273:77: optimized:  Inlining std::linear_congruential_engine<_UIntType, __a, __c, __m>::linear_congruential_engine(std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type) [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1604 into std::linear_congruential_engine<_UIntType, __a, __c, __m>::linear_congruential_engine() [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1567.
+/usr/include/c++/10.2.0/bits/random.h:149:48: note: Considering inline candidate static _Tp std::__detail::_Mod<_Tp, __m, __a, __c, true, __s>::__calc(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 16807; _Tp __c = 0; bool __s = true]/1667.
+/usr/include/c++/10.2.0/bits/random.h:149:48: optimized:  Inlining static _Tp std::__detail::_Mod<_Tp, __m, __a, __c, true, __s>::__calc(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 16807; _Tp __c = 0; bool __s = true]/1667 into _Tp std::__detail::__mod(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 16807; _Tp __c = 0]/1666.
+/usr/include/c++/10.2.0/bits/random.h:351:50: note: Considering inline candidate _Tp std::__detail::__mod(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 16807; _Tp __c = 0]/1666.
+/usr/include/c++/10.2.0/bits/random.h:351:50: optimized:  Inlining _Tp std::__detail::__mod(_Tp) [with _Tp = long unsigned int; _Tp __m = 2147483647; _Tp __a = 16807; _Tp __c = 0]/1666 into std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type std::linear_congruential_engine<_UIntType, __a, __c, __m>::operator()() [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1662.
+/usr/include/c++/10.2.0/bits/random.tcc:3297:29: note: Considering inline candidate std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type std::linear_congruential_engine<_UIntType, __a, __c, __m>::operator()() [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1662.
+/usr/include/c++/10.2.0/bits/random.tcc:3297:29: optimized:  Inlining std::linear_congruential_engine<_UIntType, __a, __c, __m>::result_type std::linear_congruential_engine<_UIntType, __a, __c, __m>::operator()() [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1662 into _RealType std::generate_canonical(_UniformRandomNumberGenerator&) [with _RealType = double; long unsigned int __bits = 53; _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>]/1648.
+/usr/include/c++/10.2.0/bits/random.tcc:3291:39: note: Considering inline candidate const _Tp& std::max(const _Tp&, const _Tp&) [with _Tp = long unsigned int]/1661.
+/usr/include/c++/10.2.0/bits/random.tcc:3291:39: optimized:  Inlining const _Tp& std::max(const _Tp&, const _Tp&) [with _Tp = long unsigned int]/1661 into _RealType std::generate_canonical(_UniformRandomNumberGenerator&) [with _RealType = double; long unsigned int __bits = 53; _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>]/1648.
+/usr/include/c++/10.2.0/bits/random.tcc:3286:26: note: Considering inline candidate const _Tp& std::min(const _Tp&, const _Tp&) [with _Tp = long unsigned int]/1660.
+/usr/include/c++/10.2.0/bits/random.tcc:3286:26: optimized:  Inlining const _Tp& std::min(const _Tp&, const _Tp&) [with _Tp = long unsigned int]/1660 into _RealType std::generate_canonical(_UniformRandomNumberGenerator&) [with _RealType = double; long unsigned int __bits = 53; _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>]/1648.
+/usr/include/c++/10.2.0/bits/random.h:183:38: note: Considering inline candidate _RealType std::generate_canonical(_UniformRandomNumberGenerator&) [with _RealType = double; long unsigned int __bits = 53; _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>]/1648.
+/usr/include/c++/10.2.0/bits/random.h:183:38: optimized:  Inlining _RealType std::generate_canonical(_UniformRandomNumberGenerator&) [with _RealType = double; long unsigned int __bits = 53; _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>]/1648 into _DInputType std::__detail::_Adaptor<_Engine, _DInputType>::operator()() [with _Engine = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _DInputType = double]/1630.
+/usr/include/c++/10.2.0/bits/random.h:1859:52: note: Considering inline candidate std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::param_type::a() const [with _RealType = double]/1632.
+/usr/include/c++/10.2.0/bits/random.h:1859:52: optimized:  Inlining std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::param_type::a() const [with _RealType = double]/1632 into std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::operator()(_UniformRandomNumberGenerator&, const std::uniform_real_distribution<_RealType>::param_type&) [with _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _RealType = double]/1606.
+/usr/include/c++/10.2.0/bits/random.h:1859:40: note: Considering inline candidate std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::param_type::a() const [with _RealType = double]/1632.
+/usr/include/c++/10.2.0/bits/random.h:1859:40: optimized:  Inlining std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::param_type::a() const [with _RealType = double]/1632 into std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::operator()(_UniformRandomNumberGenerator&, const std::uniform_real_distribution<_RealType>::param_type&) [with _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _RealType = double]/1606.
+/usr/include/c++/10.2.0/bits/random.h:1859:30: note: Considering inline candidate std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::param_type::b() const [with _RealType = double]/1631.
+/usr/include/c++/10.2.0/bits/random.h:1859:30: optimized:  Inlining std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::param_type::b() const [with _RealType = double]/1631 into std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::operator()(_UniformRandomNumberGenerator&, const std::uniform_real_distribution<_RealType>::param_type&) [with _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _RealType = double]/1606.
+/usr/include/c++/10.2.0/bits/random.h:1859:19: note: Considering inline candidate _DInputType std::__detail::_Adaptor<_Engine, _DInputType>::operator()() [with _Engine = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _DInputType = double]/1630.
+/usr/include/c++/10.2.0/bits/random.h:1859:19: optimized:  Inlining _DInputType std::__detail::_Adaptor<_Engine, _DInputType>::operator()() [with _Engine = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _DInputType = double]/1630 into std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::operator()(_UniformRandomNumberGenerator&, const std::uniform_real_distribution<_RealType>::param_type&) [with _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _RealType = double]/1606.
+/usr/include/c++/10.2.0/bits/random.h:1858:6: note: Considering inline candidate std::__detail::_Adaptor<_Engine, _DInputType>::_Adaptor(_Engine&) [with _Engine = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _DInputType = double]/1628.
+/usr/include/c++/10.2.0/bits/random.h:1858:6: optimized:  Inlining std::__detail::_Adaptor<_Engine, _DInputType>::_Adaptor(_Engine&) [with _Engine = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _DInputType = double]/1628 into std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::operator()(_UniformRandomNumberGenerator&, const std::uniform_real_distribution<_RealType>::param_type&) [with _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _RealType = double]/1606.
+/usr/include/c++/10.2.0/bits/random.h:1850:34: note: Considering inline candidate std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::operator()(_UniformRandomNumberGenerator&, const std::uniform_real_distribution<_RealType>::param_type&) [with _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _RealType = double]/1606.
+/usr/include/c++/10.2.0/bits/random.h:1850:34: optimized:  Inlining std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::operator()(_UniformRandomNumberGenerator&, const std::uniform_real_distribution<_RealType>::param_type&) [with _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _RealType = double]/1606 into std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::operator()(_UniformRandomNumberGenerator&) [with _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _RealType = double]/1569.
+binning.h:104:19: note: Considering inline candidate std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::operator()(_UniformRandomNumberGenerator&) [with _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _RealType = double]/1569.
+binning.h:104:19: optimized:  Inlining std::uniform_real_distribution<_RealType>::result_type std::uniform_real_distribution<_RealType>::operator()(_UniformRandomNumberGenerator&) [with _UniformRandomNumberGenerator = std::linear_congruential_engine<long unsigned int, 16807, 0, 2147483647>; _RealType = double]/1569 into void InitializeRandomArray(T*, size_t, double, double) [with T = float]/1500.
+binning.h:102:30: note: Considering inline candidate std::linear_congruential_engine<_UIntType, __a, __c, __m>::linear_congruential_engine() [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1567.
+binning.h:102:30: optimized:  Inlining std::linear_congruential_engine<_UIntType, __a, __c, __m>::linear_congruential_engine() [with _UIntType = long unsigned int; _UIntType __a = 16807; _UIntType __c = 0; _UIntType __m = 2147483647]/1567 into void InitializeRandomArray(T*, size_t, double, double) [with T = float]/1500.
+binning.h:101:42: note: Considering inline candidate std::uniform_real_distribution<_RealType>::uniform_real_distribution(_RealType, _RealType) [with _RealType = double]/1564.
+binning.h:101:42: optimized:  Inlining std::uniform_real_distribution<_RealType>::uniform_real_distribution(_RealType, _RealType) [with _RealType = double]/1564 into void InitializeRandomArray(T*, size_t, double, double) [with T = float]/1500.
+binning.h:126:24: note: Considering inline candidate void BinParticlesReference(const InputDataType&, int (&)[10][10])/1283.
+binning.h:126:24: missed:   will not early inline: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285->void BinParticlesReference(const InputDataType&, int (&)[10][10])/1283, call is cold and code would grow at least by 27
+binning.h:120:24: note: Considering inline candidate void InitializeRandomArray(T*, size_t, double, double) [with T = float]/1500.
+binning.h:120:24: missed:   will not early inline: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285->void InitializeRandomArray(T*, size_t, double, double) [with T = float]/1500, call is cold and code would grow at least by 16
+binning.h:119:24: note: Considering inline candidate void InitializeRandomArray(T*, size_t, double, double) [with T = float]/1500.
+binning.h:119:24: missed:   will not early inline: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285->void InitializeRandomArray(T*, size_t, double, double) [with T = float]/1500, call is cold and code would grow at least by 16
+binning.cpp:64:32: note: Considering inline candidate void ValidateResults(const int (&)[10][10], const int (&)[10][10])/1284.
+binning.cpp:64:32: missed:   will not early inline: int main(int, char**)/1287->void ValidateResults(const int (&)[10][10], const int (&)[10][10])/1284, call is cold and code would grow at least by 21
+binning.cpp:60:17: note: Considering inline candidate void BinParticles(const InputDataType&, int (&)[10][10])/1286.
+binning.cpp:60:17: missed:   will not early inline: int main(int, char**)/1287->void BinParticles(const InputDataType&, int (&)[10][10])/1286, call is cold and code would grow at least by 27
+binning.cpp:40:45: note: Considering inline candidate double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285.
+binning.cpp:40:45: missed:   will not early inline: int main(int, char**)/1287->double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285, call is cold and code would grow at least by 56
+binning.h:57:6: optimized: Semantic equality hit:void BinParticlesReference(const InputDataType&, int (&)[10][10])/1283->void BinParticles(const InputDataType&, int (&)[10][10])/1286
+binning.h:57:6: optimized: Assembler symbol names:_Z21BinParticlesReferenceRK13InputDataTypeRA10_A10_i/1283->_Z12BinParticlesRK13InputDataTypeRA10_A10_i/1286
+/usr/include/c++/10.2.0/bits/random.tcc:3301:27: missed:   not inlinable: InitializeRandomArray.constprop/2175 -> long int __builtin_expect(long int, long int)/2167, function body not available
+binning.h:88:12: missed:   not inlinable: void ValidateResults(const int (&)[10][10], const int (&)[10][10])/2171 -> int __builtin_puts(const char*)/2159, function body not available
+binning.h:91:15: missed:   not inlinable: void ValidateResults(const int (&)[10][10], const int (&)[10][10])/2171 -> int printf(const char*, ...)/2160, function body not available
+binning.h:93:13: missed:   not inlinable: void ValidateResults(const int (&)[10][10], const int (&)[10][10])/2171 -> int __builtin_putchar(int)/2161, function body not available
+binning.h:95:9: missed:   not inlinable: void ValidateResults(const int (&)[10][10], const int (&)[10][10])/2171 -> void exit(int)/2162, function body not available
+binning.cpp:90:7: missed:   not inlinable: int main(int, char**)/1287 -> void free(void*)/2170, function body not available
+binning.cpp:89:7: missed:   not inlinable: int main(int, char**)/1287 -> void free(void*)/2170, function body not available
+binning.cpp:87:62: missed:   not inlinable: int main(int, char**)/1287 -> int fflush(FILE*)/2165, function body not available
+binning.cpp:87:9: missed:   not inlinable: int main(int, char**)/1287 -> int __builtin_puts(const char*)/2159, function body not available
+binning.cpp:86:9: missed:   not inlinable: int main(int, char**)/1287 -> int __builtin_puts(const char*)/2159, function body not available
+binning.cpp:85:9: missed:   not inlinable: int main(int, char**)/1287 -> int __builtin_puts(const char*)/2159, function body not available
+binning.cpp:83:9: missed:   not inlinable: int main(int, char**)/1287 -> int printf(const char*, ...)/2160, function body not available
+binning.cpp:82:9: missed:   not inlinable: int main(int, char**)/1287 -> int __builtin_puts(const char*)/2159, function body not available
+binning.cpp:81:13: missed:   not inlinable: int main(int, char**)/1287 -> double sqrt(double)/2169, function body not available
+binning.cpp:76:11: missed:   not inlinable: int main(int, char**)/1287 -> int fflush(FILE*)/2165, function body not available
+binning.cpp:73:11: missed:   not inlinable: int main(int, char**)/1287 -> int printf(const char*, ...)/2160, function body not available
+binning.cpp:64:32: missed:   not inlinable: int main(int, char**)/1287 -> void ValidateResults(const int (&)[10][10], const int (&)[10][10])/1284, call is unlikely and code size would grow
+binning.cpp:61:30: missed:   not inlinable: int main(int, char**)/1287 -> double omp_get_wtime()/2163, function body not available
+binning.cpp:59:30: missed:   not inlinable: int main(int, char**)/1287 -> double omp_get_wtime()/2163, function body not available
+binning.cpp:44:9: missed:   not inlinable: int main(int, char**)/1287 -> int printf(const char*, ...)/2160, function body not available
+binning.cpp:43:42: missed:   not inlinable: int main(int, char**)/1287 -> int fflush(FILE*)/2165, function body not available
+binning.cpp:43:9: missed:   not inlinable: int main(int, char**)/1287 -> int __builtin_puts(const char*)/2159, function body not available
+binning.cpp:40:45: missed:   not inlinable: int main(int, char**)/1287 -> double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285, --param max-inline-insns-auto limit reached
+binning.cpp:36:32: missed:   not inlinable: int main(int, char**)/1287 -> void* malloc(size_t)/2168, function body not available
+binning.cpp:35:32: missed:   not inlinable: int main(int, char**)/1287 -> void* malloc(size_t)/2168, function body not available
+binning.cpp:22:9: missed:   not inlinable: int main(int, char**)/1287 -> int printf(const char*, ...)/2160, function body not available
+binning.h:130:9: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> int printf(const char*, ...)/2160, function body not available
+binning.h:127:81: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> int fflush(FILE*)/2165, function body not available
+binning.h:127:38: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> int printf(const char*, ...)/2160, function body not available
+binning.h:127:28: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> double omp_get_wtime()/2163, function body not available
+binning.h:125:79: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> int fflush(FILE*)/2165, function body not available
+binning.h:125:38: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> int printf(const char*, ...)/2160, function body not available
+binning.h:125:28: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> double omp_get_wtime()/2163, function body not available
+binning.h:122:81: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> int fflush(FILE*)/2165, function body not available
+binning.h:122:38: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> int printf(const char*, ...)/2160, function body not available
+binning.h:122:28: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> double omp_get_wtime()/2163, function body not available
+binning.h:109:67: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> int fflush(FILE*)/2165, function body not available
+binning.h:109:38: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> int printf(const char*, ...)/2160, function body not available
+binning.h:109:28: missed:   not inlinable: double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 -> double omp_get_wtime()/2163, function body not available
+binning.h:64:39: missed:   not inlinable: void BinParticlesReference(const InputDataType&, int (&)[10][10])/1283 -> float sinf(float)/2158, function body not available
+binning.h:63:39: missed:   not inlinable: void BinParticlesReference(const InputDataType&, int (&)[10][10])/1283 -> float cosf(float)/2157, function body not available
+binning.h:120:24: optimized:  Inlined InitializeRandomArray.constprop/2176 into double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 which now has time 1186.980015 and size 80, net change of +16.
+binning.h:119:24: optimized:  Inlined InitializeRandomArray.constprop/2175 into double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 which now has time 1514.822474 and size 96, net change of -9.
+optimized:  Inlined void ValidateResults(const int (&)[10][10], const int (&)[10][10])/2171 into void ValidateResults(const int (&)[10][10], const int (&)[10][10])/1284 which now has time 1757.292727 and size 46, net change of -6.
+binning.cpp:60:17: optimized:  Inlined void BinParticlesReference(const InputDataType&, int (&)[10][10])/2177 into int main(int, char**)/1287 which now has time 11659.810471 and size 140, net change of +27.
+optimized:  Inlined void BinParticlesReference(const InputDataType&, int (&)[10][10])/2178 into void BinParticles(const InputDataType&, int (&)[10][10])/1286 which now has time 388.818185 and size 33, net change of +27.
+binning.h:126:24: optimized:  Inlined void BinParticlesReference(const InputDataType&, int (&)[10][10])/2179 into double GetReferenceResults(const InputDataType&, int (&)[10][10])/1285 which now has time 1889.640659 and size 123, net change of +27.
+Unit growth for small function inlining: 295->377 (27%)
+
+Inlined 28 calls, eliminated 21 functions
+
+binning.h:61:21: missed: couldn't vectorize loop
+binning.h:61:21: missed: not vectorized: number of iterations cannot be computed.
+binning.h:57:6: note: vectorized 0 loops in function.
+binning.h:71:24: missed: failed: evolution of offset is not affine.
+binning.h:71:5: missed: failed: evolution of offset is not affine.
+binning.h:61:21: note: ***** Analysis failed with vector mode V8SI
+binning.h:61:21: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:63:50: note: ***** Analysis failed with vector mode V4DI
+binning.h:63:50: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.h:61:21: note: ***** Analysis failed with vector mode V8SF
+binning.h:61:21: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+binning.h:73:1: note: ***** Analysis failed with vector mode VOID
+binning.h:80:23: optimized: loop with 10 iterations completely unrolled (header execution count 97603128)
+binning.h:91:15: missed: statement clobbers memory: printf ("[%d/%d] ", _25, _24);
+binning.h:89:23: missed: couldn't vectorize loop
+binning.h:91:15: missed: statement clobbers memory: printf ("[%d/%d] ", _25, _24);
+binning.h:90:25: missed: couldn't vectorize loop
+binning.h:91:15: missed: statement clobbers memory: printf ("[%d/%d] ", _25, _24);
+binning.h:79:21: missed: couldn't vectorize loop
+binning.h:81:15: missed: not vectorized: unsupported data-type double
+binning.h:79:21: note: ***** Analysis failed with vector mode V8SI
+binning.h:79:21: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:75:6: note: vectorized 0 loops in function.
+binning.h:91:15: missed: statement clobbers memory: printf ("[%d/%d] ", _25, _24);
+binning.h:81:7: note: ***** Analysis failed with vector mode V8SI
+binning.h:81:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:81:7: note: ***** Analysis failed with vector mode V8SI
+binning.h:81:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:81:7: note: ***** Analysis failed with vector mode V8SI
+binning.h:81:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:81:7: note: ***** Analysis failed with vector mode V8SI
+binning.h:81:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:81:7: note: ***** Analysis failed with vector mode V8SI
+binning.h:81:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:81:7: note: ***** Analysis failed with vector mode V8SI
+binning.h:81:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:81:7: note: ***** Analysis failed with vector mode V8SI
+binning.h:81:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:81:7: note: ***** Analysis failed with vector mode V8SI
+binning.h:81:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:81:7: note: ***** Analysis failed with vector mode V8SI
+binning.h:81:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:81:7: note: ***** Analysis failed with vector mode V8SI
+binning.h:81:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:79:21: note: ***** Analysis failed with vector mode VOID
+binning.h:87:3: note: ***** Analysis failed with vector mode VOID
+binning.h:88:12: missed: statement clobbers memory: __builtin_puts (&"\nERROR: optimized algorithm produces incorrect results!"[0]);
+binning.h:91:15: missed: statement clobbers memory: printf ("[%d/%d] ", _25, _24);
+binning.h:91:15: note: ***** Analysis failed with vector mode V8SI
+binning.h:91:15: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:90:25: note: ***** Analysis failed with vector mode VOID
+binning.h:93:13: missed: statement clobbers memory: __builtin_putchar (10);
+binning.h:89:23: note: ***** Analysis failed with vector mode VOID
+binning.h:95:9: missed: statement clobbers memory: exit (1);
+binning.h:97:1: note: ***** Analysis failed with vector mode VOID
+/usr/include/c++/10.2.0/bits/random.tcc:3295:34: optimized: loop with 2 iterations completely unrolled (header execution count 78961112)
+/usr/include/c++/10.2.0/bits/random.tcc:3295:34: optimized: loop with 2 iterations completely unrolled (header execution count 78961112)
+binning.h:113:26: optimized: loop with 10 iterations completely unrolled (header execution count 97603128)
+binning.h:61:21: missed: couldn't vectorize loop
+binning.h:61:21: missed: not vectorized: number of iterations cannot be computed.
+binning.h:103:24: missed: couldn't vectorize loop
+/usr/include/c++/10.2.0/bits/random.h:139:8: missed: not vectorized: unsupported use in stmt.
+binning.h:103:24: note: ***** Analysis failed with vector mode V8SF
+binning.h:103:24: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+binning.h:103:24: missed: couldn't vectorize loop
+/usr/include/c++/10.2.0/bits/random.h:139:8: missed: not vectorized: unsupported use in stmt.
+binning.h:103:24: note: ***** Analysis failed with vector mode V8SF
+binning.h:103:24: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+binning.h:112:24: optimized: loop vectorized using 32 byte vectors
+binning.h:112:24: optimized: loop vectorized using 16 byte vectors
+binning.h:108:8: note: vectorized 1 loops in function.
+binning.h:71:24: missed: failed: evolution of offset is not affine.
+binning.h:71:5: missed: failed: evolution of offset is not affine.
+binning.h:108:8: optimized: loop turned into non-loop; it never loops
+binning.h:108:8: optimized: loop with 1 iterations completely unrolled (header execution count 9759239)
+binning.h:109:28: missed: statement clobbers memory: t0_15 = omp_get_wtime ();
+binning.h:109:38: missed: statement clobbers memory: printf ("Initialization...");
+binning.h:109:67: missed: statement clobbers memory: fflush (stdout.0_1);
+binning.h:109:67: note: ***** Analysis failed with vector mode V4DI
+binning.h:109:67: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.h:104:13: note: ***** Analysis failed with vector mode V4DI
+binning.h:104:13: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+/usr/include/c++/10.2.0/bits/random.tcc:3301:7: note: ***** Analysis failed with vector mode VOID
+binning.h:103:24: note: ***** Analysis failed with vector mode V8SF
+binning.h:103:24: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+binning.h:104:13: note: ***** Analysis failed with vector mode V4DI
+binning.h:104:13: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+/usr/include/c++/10.2.0/bits/random.tcc:3301:7: note: ***** Analysis failed with vector mode VOID
+binning.h:103:24: note: ***** Analysis failed with vector mode V8SF
+binning.h:103:24: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+binning.h:122:28: missed: statement clobbers memory: t1_26 = omp_get_wtime ();
+binning.h:122:38: missed: statement clobbers memory: printf (" done in %.3f seconds.\n", _4);
+binning.h:122:38: note: ***** Analysis failed with vector mode VOID
+binning.h:122:81: missed: statement clobbers memory: fflush (stdout.1_5);
+binning.h:122:81: note: ***** Analysis failed with vector mode V4DI
+binning.h:122:81: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.h:125:28: missed: statement clobbers memory: t2_30 = omp_get_wtime ();
+binning.h:125:38: missed: statement clobbers memory: printf ("Computing reference result...");
+binning.h:125:79: missed: statement clobbers memory: fflush (stdout.2_6);
+binning.h:125:79: note: ***** Analysis failed with vector mode V4DI
+binning.h:125:79: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.h:61:21: note: ***** Analysis failed with vector mode V8SI
+binning.h:61:21: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:127:28: missed: statement clobbers memory: t3_35 = omp_get_wtime ();
+binning.h:127:38: missed: statement clobbers memory: printf (" done in %.3f seconds.\n", _7);
+binning.h:127:38: note: ***** Analysis failed with vector mode VOID
+binning.h:127:81: missed: statement clobbers memory: fflush (stdout.3_8);
+binning.h:127:81: note: ***** Analysis failed with vector mode V4DI
+binning.h:127:81: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.h:130:9: missed: statement clobbers memory: printf ("\x1b[1m%s \x1b[42m%10.2e GP/s\x1b[0m\n", "Baseline performance:", refPerf_38);
+binning.h:130:9: note: ***** Analysis failed with vector mode VOID
+binning.h:133:10: note: ***** Analysis failed with vector mode VOID
+binning.h:63:50: note: ***** Analysis failed with vector mode V4DI
+binning.h:63:50: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.h:61:21: note: ***** Analysis failed with vector mode V8SF
+binning.h:61:21: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+binning.h:61:21: missed: couldn't vectorize loop
+binning.h:61:21: missed: not vectorized: number of iterations cannot be computed.
+binning.cpp:3:6: note: vectorized 0 loops in function.
+binning.h:71:24: missed: failed: evolution of offset is not affine.
+binning.h:71:5: missed: failed: evolution of offset is not affine.
+binning.h:61:21: note: ***** Analysis failed with vector mode V8SI
+binning.h:61:21: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:63:50: note: ***** Analysis failed with vector mode V4DI
+binning.h:63:50: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.h:61:21: note: ***** Analysis failed with vector mode V8SF
+binning.h:61:21: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+binning.h:61:21: note: ***** Analysis failed with vector mode VOID
+binning.cpp:53:28: optimized: loop with 10 iterations completely unrolled (header execution count 97603128)
+binning.cpp:52:26: optimized: loop with 10 iterations completely unrolled (header execution count 9759239)
+binning.cpp:81:13: missed: statement clobbers memory: dperf_27 = sqrt (_18);
+binning.h:71:24: missed: failed: evolution of offset is not affine.
+binning.h:71:5: missed: failed: evolution of offset is not affine.
+binning.cpp:50:18: missed: couldn't vectorize loop
+binning.cpp:50:18: missed: not vectorized: control flow in loop.
+binning.h:61:21: missed: couldn't vectorize loop
+binning.h:63:34: missed: not vectorized: no vectype for stmt: _81 = *_80;
+ scalar_type: float
+binning.cpp:20:5: note: vectorized 0 loops in function.
+binning.h:71:24: missed: failed: evolution of offset is not affine.
+binning.h:71:5: missed: failed: evolution of offset is not affine.
+binning.cpp:22:9: missed: statement clobbers memory: printf ("\nParticle Binning Optimization Demo (%s)\n%s\n%s\n\n", "single precision", "Additional information is available in accompanying papers at http://colfaxresearch.com/\n", "(c) Colfax International, 2015.");
+binning.cpp:35:32: missed: statement clobbers memory: _1 = malloc (268435456);
+binning.cpp:35:32: note: ***** Analysis failed with vector mode V8SI
+binning.cpp:35:32: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.cpp:36:32: missed: statement clobbers memory: _2 = malloc (268435456);
+binning.cpp:36:32: note: ***** Analysis failed with vector mode V4DI
+binning.cpp:36:32: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.cpp:40:45: missed: statement clobbers memory: _43 = GetReferenceResults (&rawData, &binnedDataRef);
+binning.cpp:40:45: note: ***** Analysis failed with vector mode V4DI
+binning.cpp:40:45: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.cpp:43:9: missed: statement clobbers memory: __builtin_puts (&"\nBenchmarking...\n"[0]);
+binning.cpp:43:42: missed: statement clobbers memory: fflush (stdout.6_3);
+binning.cpp:43:42: note: ***** Analysis failed with vector mode V4DI
+binning.cpp:43:42: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.cpp:44:9: missed: statement clobbers memory: printf ("\x1b[1m%7s %10s %10s %10s %s\x1b[0m\n", "Trial", "Time, s", "Speedup", "GP/s", "*");
+binning.cpp:59:30: missed: statement clobbers memory: t0_51 = omp_get_wtime ();
+binning.cpp:59:30: note: ***** Analysis succeeded with vector mode V8SI
+binning.cpp:59:30: note: SLPing BB part
+binning.cpp:59:30: note: ------>vectorizing SLP node starting from: binnedData[0][0] = 0;
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: vect_is_simple_use: operand 0, type of def: constant
+binning.cpp:59:30: note: transform store. ncopies = 1
+binning.cpp:59:30: note: created new init_stmt: vect_cst__285 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__274 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__273 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__272 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__271 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__270 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__259 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__257 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__256 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__255 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__242 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: created new init_stmt: vect_cst__241 = { 0, 0, 0, 0, 0, 0, 0, 0 };
+binning.cpp:59:30: note: create vector_type-pointer variable to type: vector(8) int  vectorizing a pointer ref: binnedData[0][0]
+binning.cpp:59:30: note: created &binnedData[0][0]
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)&binnedData] = vect_cst__241;
+binning.cpp:59:30: note: add new stmt: _228 = &binnedData[0][0] + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_228] = vect_cst__242;
+binning.cpp:59:30: note: add new stmt: _226 = _228 + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_226] = vect_cst__255;
+binning.cpp:59:30: note: add new stmt: _182 = _226 + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_182] = vect_cst__256;
+binning.cpp:59:30: note: add new stmt: _180 = _182 + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_180] = vect_cst__257;
+binning.cpp:59:30: note: add new stmt: _166 = _180 + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_166] = vect_cst__259;
+binning.cpp:59:30: note: add new stmt: _154 = _166 + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_154] = vect_cst__270;
+binning.cpp:59:30: note: add new stmt: _151 = _154 + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_151] = vect_cst__271;
+binning.cpp:59:30: note: add new stmt: _137 = _151 + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_137] = vect_cst__272;
+binning.cpp:59:30: note: add new stmt: _131 = _137 + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_131] = vect_cst__273;
+binning.cpp:59:30: note: add new stmt: _123 = _131 + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_123] = vect_cst__274;
+binning.cpp:59:30: note: add new stmt: _115 = _123 + 32;
+binning.cpp:59:30: note: add new stmt: MEM <vector(8) int> [(int *)_115] = vect_cst__285;
+binning.cpp:59:30: note: vectorizing stmts using SLP.
+binning.cpp:59:30: optimized: basic block part vectorized using 32 byte vectors
+binning.cpp:59:30: note: ***** The result for vector mode V32QI would be the same
+binning.h:61:21: note: ***** Analysis failed with vector mode V8SI
+binning.h:61:21: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SI
+binning.h:61:21: note: basic block vectorized
+binning.cpp:61:30: missed: statement clobbers memory: t1_54 = omp_get_wtime ();
+binning.cpp:64:5: note: ***** Analysis failed with vector mode VOID
+binning.h:63:50: note: ***** Analysis failed with vector mode V4DI
+binning.h:63:50: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.h:61:21: note: ***** Analysis failed with vector mode V8SF
+binning.h:61:21: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V8SF
+binning.cpp:64:32: missed: statement clobbers memory: ValidateResults (&binnedData, &binnedDataRef);
+binning.cpp:67:5: note: ***** Analysis failed with vector mode VOID
+binning.cpp:73:11: missed: statement clobbers memory: printf ("%7d %10.3e %10.2f %10.2e %s\n", t_169, _33, _14, _5, "");
+binning.cpp:73:11: note: ***** Analysis failed with vector mode VOID
+binning.cpp:76:11: missed: statement clobbers memory: fflush (stdout.8_15);
+binning.cpp:76:11: note: ***** Analysis failed with vector mode V4DI
+binning.cpp:76:11: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.cpp:50:18: note: ***** Analysis failed with vector mode VOID
+binning.cpp:81:13: note: ***** Analysis failed with vector mode VOID
+binning.cpp:81:13: note: ***** Analysis failed with vector mode VOID
+binning.cpp:81:13: missed: statement clobbers memory: dperf_27 = sqrt (_18);
+binning.cpp:82:9: missed: statement clobbers memory: __builtin_puts (&"---------------------------------------------------------"[0]);
+binning.cpp:83:9: missed: statement clobbers memory: printf ("\x1b[1m%s%7.2f \x1b[42m%10.2e +- %.2e GP/s\x1b[0m\n", "Optimized performance:", _19, perf_61, dperf_25);
+binning.cpp:83:9: note: ***** Analysis failed with vector mode VOID
+binning.cpp:85:9: missed: statement clobbers memory: __builtin_puts (&"---------------------------------------------------------"[0]);
+binning.cpp:86:9: missed: statement clobbers memory: __builtin_puts (&"*  - Performance unit 1 GP/s is 10^9 particles binned per second."[0]);
+binning.cpp:87:9: missed: statement clobbers memory: __builtin_puts (&"** - warm-up, not included in average\n"[0]);
+binning.cpp:87:62: missed: statement clobbers memory: fflush (stdout.9_20);
+binning.cpp:87:62: note: ***** Analysis failed with vector mode V4DI
+binning.cpp:87:62: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.cpp:89:7: missed: statement clobbers memory: free (_21);
+binning.cpp:89:7: note: ***** Analysis failed with vector mode V4DI
+binning.cpp:89:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.cpp:90:7: missed: statement clobbers memory: free (_22);
+binning.cpp:90:7: note: ***** Analysis failed with vector mode V4DI
+binning.cpp:90:7: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
+binning.cpp:91:1: note: ***** Analysis failed with vector mode VOID
+binning.cpp:73:11: missed: statement clobbers memory: printf ("%7d %10.3e %10.2f %10.2e %s\n", t_169, _76, _214, _32, "**");
+binning.cpp:73:11: note: ***** Analysis failed with vector mode VOID
+binning.cpp:76:11: missed: statement clobbers memory: fflush (stdout.8_229);
+binning.cpp:76:11: note: ***** Analysis failed with vector mode V4DI
+binning.cpp:76:11: note: ***** Skipping vector mode V32QI, which would repeat the analysis for V4DI
